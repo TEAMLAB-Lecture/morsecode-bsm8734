@@ -131,25 +131,29 @@ def is_validated_morse_code(user_input):
         True
         >>> mc.is_validated_morse_code("!.1 abc --")
         False
+        ....... .. :false
     """
     # ===Modify codes below=============
     # 조건에 따라 변환되어야 할 결과를 result 변수에 할당 또는 필요에 따라 자유로운 수정
 
-    result = False
-    target = user_input[:]
+    result = True
+    target = user_input[:].strip()
 
     # 1) "-","."," "외 다른 글자가 포함되어 있는 경우    
     tar = target.replace('-','').replace('.', '').replace(' ','')
     if len(tar) != 0: return False
 
     # 2) get_morse_code_dict 함수에 정의된 Morse Code 부호외 다른 코드가 입력된 경우 ex)......
-    for tg_word in target.split():
-        if result is True: break
+    for tg_word in target.split()[:]:
+        flag = False
         for ms_word in get_morse_code_dict().values():
             if tg_word == ms_word:
-                result = True
+                flag = True
                 break
-        
+        if flag == False:
+            result = False
+            break
+                
     return result
     # ==================================
 
